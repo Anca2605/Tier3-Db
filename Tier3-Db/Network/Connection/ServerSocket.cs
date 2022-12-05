@@ -74,6 +74,12 @@ namespace Tier3_Db.Network.Connection
                         case "EDITCLIENT":
                             _manager.EditClient(stream, req1.Content);
                             break;
+                        case "GETBILLBYID":
+                            _client.GetBill(stream, req1.Content);
+                            break;
+                        case "VIEWBILLS":
+                            _client.ViewBills(stream, req1.Content);
+                            break;
                         case "ADDCLIENT":
                             _manager.AddClient(stream, req1.Content);
                             break;

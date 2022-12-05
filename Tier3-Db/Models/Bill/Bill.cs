@@ -23,4 +23,7 @@ public class Bill
     public string provider { get; set; }
     [JsonPropertyName("date")]
     public DateTime date { get; set; }
+    [JsonPropertyName("bills")]
+    public List<Bill> ViewBills{ get; set; }
+    
 }
