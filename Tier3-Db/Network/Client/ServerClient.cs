@@ -2,6 +2,9 @@
 using System.Text;
 using System.Text.Json;
 using Db3.Repositories.Client;
+using Microsoft.EntityFrameworkCore;
+using Tier3_Db.Models;
+using Tier3_Db.Models.Bill;
 
 namespace Db3.Client;
 
@@ -9,6 +12,8 @@ public class ServerClient
 {
     private Models.Client.Client client;
         private IClientRepo clientRepo;
+        private Bill bill;
+        private List<Bill> ViewBills;
 
         public ServerClient()
         {
@@ -17,6 +22,17 @@ public class ServerClient
         }
 
         public async void GetClientByUsername(NetworkStream stream, string content)
+        {
+            Models.Client.Client test = JsonSerializer.Deserialize<Models.Client.Client>(content);
+            string username = test.Username;
+            string password = test.Password;
+            client = await clientRepo.GetClient(username, password);
+            string reply = JsonSerializer.Serialize(client);
+            byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
+            stream.Write(bytesWrite, 0, bytesWrite.Length);
+        }
+        
+        public async void GetClient(NetworkStream stream, string content)
         {
             Models.Client.Client test = JsonSerializer.Deserialize<Models.Client.Client>(content);
             string username = test.Username;
@@ -36,9 +52,9 @@ public class ServerClient
             stream.Write(bytesWrite, 0, bytesWrite.Length);
         }
 
-        public async void DeleteClient(string content)
+        public async void DeleteAccount(string content)
         {
-            await clientRepo.DeleteClient(Int32.Parse(content));
+            await client.DeleteAccount(Int32.Parse(content));
         }
         
         public async void GetClientById(NetworkStream stream, string content)
@@ -48,4 +64,21 @@ public class ServerClient
             byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
             stream.Write(bytesWrite, 0, bytesWrite.Length);
         }
+        
+        public async void GetBillById(NetworkStream stream, string content)
+        {
+            Bill bill = await clientRepo.GetBillById(Int32.Parse(content));
+            string reply = JsonSerializer.Serialize(bill);
+            byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
+            stream.Write(bytesWrite, 0, bytesWrite.Length);
+        }
+        
+        public async void ViewBills(NetworkStream stream, string content)
+        {
+            List<Bill> Viewbills = await client.ViewBills(Int32.Parse(content));
+            string reply = JsonSerializer.Serialize(Viewbills);
+            byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
+            stream.Write(bytesWrite, 0, bytesWrite.Length);
+        }
+        
 }

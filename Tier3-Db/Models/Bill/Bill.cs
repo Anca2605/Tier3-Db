@@ -1,29 +1,29 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using Tier3_Db.Models.Bill;
 
-namespace Db3.Models.Client;
+namespace Tier3_Db.Models.Bill;
 
-public class Client
+public class Bill
 {
     [Key]
     [JsonPropertyName("id")]
     public int Id { get; set; }
     [Required]
-    [JsonPropertyName("username")]
-    public string Username { get; set; }
-    [Required]
     [JsonPropertyName("name")]
     public string Name { get; set; }
-    [Required]
-    [JsonPropertyName("password")]
-    public string Password { get; set; }
     [JsonPropertyName("email")]
     public string Email { get; set; }
     [JsonPropertyName("dob")]
     public string dob { get; set; }
     [JsonPropertyName("phonenumber")]
     public string phonenumber { get; set; }
+    [JsonPropertyName("totalAmount")]
+    public int totalAmount { get; set; }
+    [JsonPropertyName("provider")]
+    public string provider { get; set; }
+    [JsonPropertyName("date")]
+    public DateTime date { get; set; }
     [JsonPropertyName("bills")]
-    public List<Bill> bills { get; set; }
+    public List<Bill> ViewBills{ get; set; }
+    
 }
