@@ -1,6 +1,5 @@
-﻿using Db3.DBAccess;
-
-namespace Db3.Repositories.Manager;
+﻿
+using Db3.Repositories.Manager;
 
 public class ManagerRepo : IManagerRepo
 {
@@ -96,4 +95,3 @@ public class ManagerRepo : IManagerRepo
         }
         
     }
-}

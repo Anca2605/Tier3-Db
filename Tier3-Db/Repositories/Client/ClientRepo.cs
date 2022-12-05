@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-namespace Db3.Repositories.Client;
+using Db3.Repositories.Client;
+
 
 public class ClientRepo : IClientRepo
 {
