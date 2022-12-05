@@ -21,7 +21,49 @@ public class ServerManager
         Models.Manager.Manager test = JsonSerializer.Deserialize<Models.Manager.Manager>(content);
         string username = test.Username;
         string password = test.Password;
-        manager = await managerRepo.GetManagerById(username, password);
+        manager = await managerRepo.GetManagerById(managerId);
+        string reply = JsonSerializer.Serialize(manager);
+        byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
+        stream.Write(bytesWrite, 0, bytesWrite.Length);
+    }
+    
+    public async void AddClient(NetworkStream stream, string content)
+    {
+        Models.Client.Client test = JsonSerializer.Deserialize<Models.Client.Client>(content);
+        string username = test.Username;
+        string password = test.Password;
+        string name = test.Name;
+        string dob = test.dob;
+        string email = test.Email;
+        string phonenumber = test.phonenumber;
+        int Id = test.Id;
+        manager = await managerRepo.AddClient(username, password, name, dob, email, phonenumber, Id);
+        string reply = JsonSerializer.Serialize(manager);
+        byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
+        stream.Write(bytesWrite, 0, bytesWrite.Length);
+    }
+    
+    public async void DeleteClient(NetworkStream stream, string content)
+    {
+        Models.Client.Client test = JsonSerializer.Deserialize<Models.Client.Client>(content);
+        string username = test.Username;
+        string password = test.Password;
+        manager = await managerRepo.DeleteClient(username, password);
+        string reply = JsonSerializer.Serialize(manager);
+        byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
+        stream.Write(bytesWrite, 0, bytesWrite.Length);
+    }
+    
+    public async void EditClient(NetworkStream stream, string content)
+    {
+        Models.Client.Client test = JsonSerializer.Deserialize<Models.Client.Client>(content);
+        string username = test.Username;
+        string password = test.Password;
+        string dob = test.dob;
+        string email = test.Email;
+        string phonenumber = test.phonenumber;
+        int Id = test.Id;
+        manager = await managerRepo.GetClient(username, password, dob, email, phonenumber, Id);
         string reply = JsonSerializer.Serialize(manager);
         byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
         stream.Write(bytesWrite, 0, bytesWrite.Length);

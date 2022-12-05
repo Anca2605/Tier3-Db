@@ -12,5 +12,7 @@ public class Manager
         public string Username { get; set; }
         [JsonPropertyName("password"), Required]
         public string Password { get; set; }
+        [JsonPropertyName("clients")]
+        public List<Client.Client> clients { get; set; }
         
 }

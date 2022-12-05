@@ -1,11 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using Db3.Repositories.Client;
 
-
-public class ClientRepo : IClientRepo
+namespace Tier3_Db.Models
 {
-    private DatabaseContext dbCtx;
-        
+
+    public class ClientRepo : IClientRepo
+    {
+        private DatabaseContext dbCtx;
+
         public async Task<string> CreateClientAccount(Models.Client.Client client)
         {
             await using (dbCtx = new DatabaseContext())
@@ -18,12 +20,13 @@ public class ClientRepo : IClientRepo
                         return "Account already exists";
                     }
                 }
-                
+
                 client.Client = new List<Models.Client.Client>();
                 await dbCtx.Clients.AddAsync(client);
                 Console.WriteLine("Account created");
                 await dbCtx.SaveChangesAsync();
             }
+
             return "Account created";
         }
 
@@ -67,7 +70,7 @@ public class ClientRepo : IClientRepo
             await using (dbCtx = new DatabaseContext())
             {
                 Models.Client.Client client;
-                
+
                 try
                 {
                     client = await dbCtx.Clients
@@ -102,6 +105,7 @@ public class ClientRepo : IClientRepo
                 }
 
                 return client;
-            } 
-        } 
+            }
+        }
+    }
 }

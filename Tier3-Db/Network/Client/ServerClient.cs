@@ -27,6 +27,17 @@ public class ServerClient
             stream.Write(bytesWrite, 0, bytesWrite.Length);
         }
         
+        public async void GetClient(NetworkStream stream, string content)
+        {
+            Models.Client.Client test = JsonSerializer.Deserialize<Models.Client.Client>(content);
+            string username = test.Username;
+            string password = test.Password;
+            client = await clientRepo.GetClient(username, password);
+            string reply = JsonSerializer.Serialize(client);
+            byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
+            stream.Write(bytesWrite, 0, bytesWrite.Length);
+        }
+        
         public async void Register(NetworkStream stream, string content)
         {
             Models.Client.Client test = JsonSerializer.Deserialize<Models.Client.Client>(content);
@@ -36,9 +47,9 @@ public class ServerClient
             stream.Write(bytesWrite, 0, bytesWrite.Length);
         }
 
-        public async void DeleteClient(string content)
+        public async void DeleteAccount(string content)
         {
-            await clientRepo.DeleteClient(Int32.Parse(content));
+            await client.DeleteAccount(Int32.Parse(content));
         }
         
         public async void GetClientById(NetworkStream stream, string content)

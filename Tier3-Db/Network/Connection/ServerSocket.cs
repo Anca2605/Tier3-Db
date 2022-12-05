@@ -5,11 +5,12 @@ using System.Text.Json;
 using Db3.Client;
 using Db3.Networking.Manager;
 
-namespace Db3;
-
-public class ServerSocket
+namespace Tier3_Db.Network.Connection
 {
-     private static List<TcpClient> _clients;
+
+    public class ServerSocket
+    {
+        private static List<TcpClient> _clients;
         private ServerClient _client;
         private ServerManager _manager;
 
@@ -58,8 +59,11 @@ public class ServerSocket
                         case "LOGIN":
                             _client.GetClient(stream, req1.Content);
                             break;
+                        case "DELETEACCOUNT":
+                            _client.DeleteAccount(req1.Content);
+                            break;
                         case "DELETECLIENT":
-                            _manager.DeleteClient(req1.Content);
+                            _manager.DeleteClient(stream, req1.Content);
                             break;
                         case "GETCLIENTBYUSERNAME":
                             _client.GetClientByUsername(stream, req1.Content);
@@ -67,16 +71,19 @@ public class ServerSocket
                         case "GETCLIENTBYID":
                             _client.GetClientById(stream, req1.Content);
                             break;
+                        case "EDITCLIENT":
+                            _manager.EditClient(stream, req1.Content);
+                            break;
                         case "ADDCLIENT":
-                            _manager.AddClient(req1.Content);
+                            _manager.AddClient(stream, req1.Content);
                             break;
                         default:
-                            string reply = JsonSerializer.Serialize("Tier3");
+                            string reply = JsonSerializer.Serialize("Tier3-Db");
                             Console.WriteLine(reply);
                             byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
                             stream.Write(bytesWrite, 0, bytesWrite.Length);
                             break;
-                            
+
                     }
 
                     stream.Close();
@@ -89,3 +96,4 @@ public class ServerSocket
             }
         }
     }
+}
