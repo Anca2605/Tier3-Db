@@ -5,7 +5,7 @@ using System.Text.Json;
 using Db3.Client;
 using Db3.Networking.Manager;
 using Db3.Utility;
-using static Db3.Utility.Network;
+using static Db3.Utility.NetworkPackage;
 
 namespace Tier3_Db.Network.Connection
 {
@@ -50,7 +50,7 @@ namespace Tier3_Db.Network.Connection
                     byte[] data = new byte[1024 * 1024];
                     int bytesToRead = stream.Read(data, 0, data.Length);
                     string req = Encoding.ASCII.GetString(data, 0, bytesToRead);
-                    Network req1 = JsonSerializer.Deserialize<Network>(req);
+                    NetworkPackage req1 = JsonSerializer.Deserialize<NetworkPackage>(req);
                     Console.WriteLine(req1.Content);
 
                     switch (req1.Content)
