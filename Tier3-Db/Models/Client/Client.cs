@@ -26,4 +26,15 @@ public class Client
     public string phonenumber { get; set; }
     [JsonPropertyName("bills")]
     public List<Bill> bills { get; set; }
+
+    public Client(int id, string username, string name, string password, string email, string dob, string phonenumber)
+    {
+        Id = id;
+        Username = username;
+        Name = name;
+        Password = password;
+        Email = email;
+        this.dob = dob;
+        this.phonenumber = phonenumber;
+    }
 }

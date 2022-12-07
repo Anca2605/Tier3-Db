@@ -8,4 +8,5 @@ public interface IManagerRepo
     Task<Models.Manager.Manager> GetManagerById(int managerId);
     Task DeleteClient(int clientId);
     Task<Models.Client.Client> GetClient(int clientId);
+    Task<Models.Client.Client> AddClient(Models.Client.Client client);
 }
