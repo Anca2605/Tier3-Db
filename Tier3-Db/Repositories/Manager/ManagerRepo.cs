@@ -1,9 +1,10 @@
 ﻿
 using Db3.Repositories.Manager;
 
+
 public class ManagerRepo : IManagerRepo
 {
-    private DatabaseContext dbCtx;
+    private UserContext dbCtx;
 
         public async Task<Models.Manager.Manager> GetManager(string username, string password)
         {

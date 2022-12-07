@@ -21,7 +21,7 @@ public class ServerManager
         Models.Manager.Manager test = JsonSerializer.Deserialize<Models.Manager.Manager>(content);
         string username = test.Username;
         string password = test.Password;
-        manager = await managerRepo.GetManagerById(managerId);
+        manager = await managerRepo.GetManagerById(int.Parse(content));
         string reply = JsonSerializer.Serialize(manager);
         byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
         stream.Write(bytesWrite, 0, bytesWrite.Length);
@@ -37,7 +37,8 @@ public class ServerManager
         string email = test.Email;
         string phonenumber = test.phonenumber;
         int Id = test.Id;
-        manager = await managerRepo.AddClient(username, password, name, dob, email, phonenumber, Id);
+        Models.Client.Client cl = new Models.Client.Client(Id,username,name,password,email,dob,phonenumber);
+        await managerRepo.AddClient(cl);
         string reply = JsonSerializer.Serialize(manager);
         byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
         stream.Write(bytesWrite, 0, bytesWrite.Length);
@@ -48,7 +49,7 @@ public class ServerManager
         Models.Client.Client test = JsonSerializer.Deserialize<Models.Client.Client>(content);
         string username = test.Username;
         string password = test.Password;
-        manager = await managerRepo.DeleteClient(username, password);
+        await managerRepo.DeleteClient(int.Parse(content));
         string reply = JsonSerializer.Serialize(manager);
         byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
         stream.Write(bytesWrite, 0, bytesWrite.Length);
@@ -63,7 +64,7 @@ public class ServerManager
         string email = test.Email;
         string phonenumber = test.phonenumber;
         int Id = test.Id;
-        manager = await managerRepo.GetClient(username, password, dob, email, phonenumber, Id);
+        await managerRepo.GetClient(Id);
         string reply = JsonSerializer.Serialize(manager);
         byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
         stream.Write(bytesWrite, 0, bytesWrite.Length);
