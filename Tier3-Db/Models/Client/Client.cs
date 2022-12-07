@@ -30,5 +30,16 @@ public class Client
     public async Task<List<Bill>> ViewBills(int parse)
     {
         throw new NotImplementedException();
+
+    public Client(int id, string username, string name, string password, string email, string dob, string phonenumber)
+    {
+        Id = id;
+        Username = username;
+        Name = name;
+        Password = password;
+        Email = email;
+        this.dob = dob;
+        this.phonenumber = phonenumber;
+
     }
 }
