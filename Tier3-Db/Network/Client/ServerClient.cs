@@ -13,7 +13,7 @@ public class ServerClient
     private Models.Client.Client client;
         private IClientRepo clientRepo;
         private Bill bill;
-        private List<Bill> ViewBills;
+        private List<Bill> BillList;
 
         public ServerClient()
         {
@@ -94,7 +94,7 @@ public class ServerClient
             stream.Write(bytesWrite, 0, bytesWrite.Length);
         }
         
-        public async void Bills(NetworkStream stream, string content)
+        public async void ViewBills(NetworkStream stream, string content)
         {
             List<Bill> Viewbills = await client.ViewBills(Int32.Parse(content));
             string reply = JsonSerializer.Serialize(Viewbills);

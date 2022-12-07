@@ -30,6 +30,7 @@ public class Client
     public async Task<List<Bill>> ViewBills(int parse)
     {
         throw new NotImplementedException();
+    }
 
     public Client(int id, string username, string name, string password, string email, string dob, string phonenumber)
     {
@@ -41,5 +42,9 @@ public class Client
         this.dob = dob;
         this.phonenumber = phonenumber;
 
+    }
+
+    public Client()
+    {
     }
 }
