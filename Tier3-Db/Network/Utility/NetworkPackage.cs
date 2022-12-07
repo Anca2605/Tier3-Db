@@ -2,12 +2,12 @@
 
 namespace Db3.Utility;
 
-public class Network
+public class NetworkPackage
 {
     [JsonPropertyName("type")] public NetworkType Type { get; set; }
     [JsonPropertyName("content")] public string Content { get; set; }
 
-    public Network(NetworkType type, string content)
+    public NetworkPackage(NetworkType type, string content)
     {
         Type = type;
         Content = content;
