@@ -27,6 +27,10 @@ public class Client
     [JsonPropertyName("bills")]
     public List<Bill> bills { get; set; }
 
+    public async Task<List<Bill>> ViewBills(int parse)
+    {
+        throw new NotImplementedException();
+
     public Client(int id, string username, string name, string password, string email, string dob, string phonenumber)
     {
         Id = id;
@@ -36,5 +40,6 @@ public class Client
         Email = email;
         this.dob = dob;
         this.phonenumber = phonenumber;
+
     }
 }

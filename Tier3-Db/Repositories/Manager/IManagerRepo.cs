@@ -6,7 +6,9 @@ public interface IManagerRepo
     Task DeleteManager(int managerId);
     Task<Models.Manager.Manager> GetManagerByUsername(string username);
     Task<Models.Manager.Manager> GetManagerById(int managerId);
-    Task DeleteClient(int clientId);
+     void DeleteClient(int clientId);
     Task<Models.Client.Client> GetClient(int clientId);
+
     Task<Models.Client.Client> AddClient(Models.Client.Client client);
+
 }

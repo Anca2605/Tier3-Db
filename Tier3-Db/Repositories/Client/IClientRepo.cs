@@ -1,4 +1,6 @@
-﻿namespace Db3.Repositories.Client;
+﻿using Tier3_Db.Models.Bill;
+
+namespace Db3.Repositories.Client;
 
 public interface IClientRepo
 {
@@ -7,4 +9,5 @@ public interface IClientRepo
     Task DeleteClient(int clientId);
     Task<Models.Client.Client> GetClientByUsername(string username);
     Task<Models.Client.Client> GetClientById(int clientId);
+    Task<Bill> GetBillById(int parse);
 }

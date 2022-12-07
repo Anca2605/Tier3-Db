@@ -21,6 +21,7 @@ public class ServerManager
         Models.Manager.Manager test = JsonSerializer.Deserialize<Models.Manager.Manager>(content);
         string username = test.Username;
         string password = test.Password;
+
         manager = await managerRepo.GetManagerById(int.Parse(content));
         string reply = JsonSerializer.Serialize(manager);
         byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
@@ -49,7 +50,9 @@ public class ServerManager
         Models.Client.Client test = JsonSerializer.Deserialize<Models.Client.Client>(content);
         string username = test.Username;
         string password = test.Password;
+
         await managerRepo.DeleteClient(int.Parse(content));
+
         string reply = JsonSerializer.Serialize(manager);
         byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
         stream.Write(bytesWrite, 0, bytesWrite.Length);
