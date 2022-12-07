@@ -26,4 +26,9 @@ public class Client
     public string phonenumber { get; set; }
     [JsonPropertyName("bills")]
     public List<Bill> bills { get; set; }
+
+    public async Task<List<Bill>> ViewBills(int parse)
+    {
+        throw new NotImplementedException();
+    }
 }
