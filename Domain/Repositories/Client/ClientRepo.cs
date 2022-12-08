@@ -8,6 +8,7 @@ namespace Tier3_Db.Models
 
     public class ClientRepo : IClientRepo
     {
+        private readonly UserContext _context;
         private DbContext dbCtx;
         private Client _client;
 
