@@ -88,6 +88,11 @@ public class ServerClient
             byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
             stream.Write(bytesWrite, 0, bytesWrite.Length);
         }
+
+        public async void getBillsForClient(NetworkStream stream, string content)
+        {
+            
+        }
         
         public async void VerifyUser(NetworkStream stream, string content)
         {
