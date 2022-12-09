@@ -28,50 +28,9 @@ public class Program
     public void ExecuteServer()
     {
         Console.WriteLine("Starting server ...");
-        //TcpListener tcpListener = new TcpListener(IPAddress.Any, 8090);
-        //tcpListener.Start();
-        
-
-        IPHostEntry host = Dns.GetHostEntry("localhost");
-        IPAddress ipAddress = host.AddressList[0];
-        IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 8090);
-        Console.WriteLine("Server started ...");
-
-        try
-        {
-            Socket listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            listener.Bind(localEndPoint);
-            listener.Listen(10);
-
-            Console.WriteLine("Waiting for connection");
-            Socket handler = listener.Accept();
-
-            string data = null;
-            byte[] bytes = null;
-
-            while (true)
-            {
-                bytes = new byte[1024];
-                int bytesRec = handler.Receive(bytes);
-                data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
-
-                if (data.IndexOf("<EOF>") > -1)
-                {
-                    break;
-                }
-
-            }
-
-            Console.WriteLine("Text received: {0}", data);
-            byte[] msg = Encoding.ASCII.GetBytes(data);
-            handler.Send(msg);
-            handler.Shutdown(SocketShutdown.Both);
-            handler.Close();
-        }
-        catch
-        {
-            
-        }
+        TcpListener tcpListener = new TcpListener(8091);
+        tcpListener.Start();
+        Console.WriteLine("Server started!");
 
         while (true)
         {
