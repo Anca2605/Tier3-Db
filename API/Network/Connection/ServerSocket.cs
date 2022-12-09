@@ -86,7 +86,7 @@ namespace Tier3_Db.Network.Connection
                             _manager.AddClient(stream, req1.Content);
                             break;
                         default:
-                            string reply = JsonSerializer.Serialize("Tier3-Db");
+                            string reply = JsonSerializer.Serialize("Domain");
                             Console.WriteLine(reply);
                             byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
                             stream.Write(bytesWrite, 0, bytesWrite.Length);
