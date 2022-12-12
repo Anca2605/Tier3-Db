@@ -6,24 +6,27 @@ namespace Tier3_Db.Models.Bill;
 public class Bill
 {
     [Key]
-    [JsonPropertyName("id")]
-    public int Id { get; set; }
+    [JsonPropertyName("billid")]
+    public int billid { get; set; }
     [Required]
-    [JsonPropertyName("name")]
-    public string Name { get; set; }
-    [JsonPropertyName("email")]
-    public string Email { get; set; }
-    [JsonPropertyName("dob")]
-    public string dob { get; set; }
-    [JsonPropertyName("phonenumber")]
-    public string phonenumber { get; set; }
-    [JsonPropertyName("totalAmount")]
-    public int totalAmount { get; set; }
+    [JsonPropertyName("clientid")] 
+    public int clientid { get; set; }
+    [JsonPropertyName("total")]
+    public double total { get; set; }
     [JsonPropertyName("provider")]
     public string provider { get; set; }
-    [JsonPropertyName("date")]
-    public DateTime date { get; set; }
+    [JsonPropertyName("priceperitem")]
+    public double priceperitem { get; set; }
+    [JsonPropertyName("billingdate")]
+    public DateTime billingdate { get; set; }
+    [JsonPropertyName("duedate")]
+    public DateTime duedate { get; set; }
     [JsonPropertyName("bills")]
-    public List<Bill> ViewBills{ get; set; }
+    public List<Bill> viewbills{ get; set; }
+    [JsonPropertyName("amount")]
+    public double amount { get; set; }
+    [JsonPropertyName("paidstatus")]
+    public bool paidstatus { get; set; }
+    
     
 }

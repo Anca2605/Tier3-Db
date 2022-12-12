@@ -26,8 +26,10 @@ public class Client
     public string phonenumber { get; set; }
     [JsonPropertyName("bills")]
     public List<Bill> bills { get; set; }
-
-    public async Task<List<Bill>> ViewBills(int parse)
+    [JsonPropertyName("subscription")]
+    public bool[] subscription { get; set; }
+    
+    public async Task<List<Bill>> viewbills(int parse)
     {
         throw new NotImplementedException();
     }
@@ -47,4 +49,6 @@ public class Client
     public Client()
     {
     }
+    
+    //implement the subscription part
 }
