@@ -83,7 +83,7 @@ public class ServerClient
         
         public async void ViewBills(NetworkStream stream, string content)
         {
-            List<Bill> Viewbills = await client.ViewBills(Int32.Parse(content));
+            List<Bill> Viewbills = await client.viewbills(Int32.Parse(content));
             string reply = JsonSerializer.Serialize(Viewbills);
             byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
             stream.Write(bytesWrite, 0, bytesWrite.Length);

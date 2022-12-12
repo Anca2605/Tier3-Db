@@ -56,7 +56,7 @@ public class ClientLogic : IClientLogic
         List<Bill> list = new List<Bill>();
         Client client = await context.Clients.FindAsync(Id);
         IQueryable<Bill> query = context.Electricity.AsQueryable();
-        query = query.Where(b=> b.Name.Equals(client.Name));
+        query = query.Where(b=> b.clientid.Equals(client.Id));
         list = await query.ToListAsync();
         return list;
     }
@@ -66,7 +66,7 @@ public class ClientLogic : IClientLogic
         List<Bill> list = new List<Bill>();
         Client client = await context.Clients.FindAsync(Id);
         IQueryable<Bill> query = context.Water.AsQueryable();
-        query = query.Where(b=> b.Name.Equals(client.Name));
+        query = query.Where(b=> b.clientid.Equals(client.Id));
         list = await query.ToListAsync();
         return list;
     }
@@ -76,7 +76,7 @@ public class ClientLogic : IClientLogic
         List<Bill> list = new List<Bill>();
         Client client = await context.Clients.FindAsync(Id);
         IQueryable<Bill> query = context.Heating.AsQueryable();
-        query = query.Where(b=> b.Name.Equals(client.Name));
+        query = query.Where(b=> b.clientid.Equals(client.Id));
         list = await query.ToListAsync();
         return list;
     }
@@ -86,7 +86,7 @@ public class ClientLogic : IClientLogic
         List<Bill> list = new List<Bill>();
         Client client = await context.Clients.FindAsync(Id);
         IQueryable<Bill> query = context.Rent.AsQueryable();
-        query = query.Where(b=> b.Name.Equals(client.Name));
+        query = query.Where(b=> b.clientid.Equals(client.Id));
         list = await query.ToListAsync();
         return list;
     }
@@ -107,11 +107,11 @@ public class ClientLogic : IClientLogic
         throw new NotImplementedException();
     }
 
-    public async Task<bool> verifyUser(string username, string passowrd)
+    public async Task<bool> verifyUser(string username, string password)
     {
         bool verified = false;
         Client c = await context.Clients.FindAsync(username);
-        if (c.Username == username && c.Password == passowrd)
+        if (c.Username == username && c.Password == password)
         {
             verified = true;
         }

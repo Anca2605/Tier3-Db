@@ -15,4 +15,5 @@ public class Manager
         [JsonPropertyName("clients")]
         public List<Client.Client> clients { get; set; }
         
+        
 }
