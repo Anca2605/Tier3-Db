@@ -85,6 +85,9 @@ public class Program
                     case "VERIFY":
                         _client.VerifyUser(stream, req1.Content);
                         break;
+                    case "BILLS":
+                        _client.getBillsForClient(stream,req1.Content);
+                        break;
                     default:
                         string reply = JsonSerializer.Serialize("Domain");
                         Console.WriteLine(reply);
