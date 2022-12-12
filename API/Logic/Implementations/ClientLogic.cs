@@ -1,4 +1,6 @@
+using System.Runtime.CompilerServices;
 using Db3.Models.Client;
+using Microsoft.EntityFrameworkCore;
 using Tier3___Server.Logic;
 using Tier3_Db.Models.Bill;
 
@@ -48,13 +50,58 @@ public class ClientLogic : IClientLogic
 
 
     }
-
-
-    public Task<List<Bill>> getBills(string content)
+    
+    public async Task<List<Bill>> getBillsElectricity(int Id)
     {
-        throw new NotImplementedException();
+        List<Bill> list = new List<Bill>();
+        Client client = await context.Clients.FindAsync(Id);
+        IQueryable<Bill> query = context.Electricity.AsQueryable();
+        query = query.Where(b=> b.Name.Equals(client.Name));
+        list = await query.ToListAsync();
+        return list;
     }
+    
+    public async Task<List<Bill>> getBillsWater(int Id)
+    {
+        List<Bill> list = new List<Bill>();
+        Client client = await context.Clients.FindAsync(Id);
+        IQueryable<Bill> query = context.Water.AsQueryable();
+        query = query.Where(b=> b.Name.Equals(client.Name));
+        list = await query.ToListAsync();
+        return list;
+    }
+    
+    public async Task<List<Bill>> getBillsHeating(int Id)
+    {
+        List<Bill> list = new List<Bill>();
+        Client client = await context.Clients.FindAsync(Id);
+        IQueryable<Bill> query = context.Heating.AsQueryable();
+        query = query.Where(b=> b.Name.Equals(client.Name));
+        list = await query.ToListAsync();
+        return list;
+    }
+    
+    public async Task<List<Bill>> getBillsRent(int Id)
+    {
+        List<Bill> list = new List<Bill>();
+        Client client = await context.Clients.FindAsync(Id);
+        IQueryable<Bill> query = context.Rent.AsQueryable();
+        query = query.Where(b=> b.Name.Equals(client.Name));
+        list = await query.ToListAsync();
+        return list;
+    }
+    
+    public async Task<List<Bill>> getBills(int Id)
+    {
+        List<Bill> list = new List<Bill>();
+        list.AddRange(getBillsRent(Id).Result);
+        list.AddRange(getBillsElectricity(Id).Result);
+        list.AddRange(getBillsHeating(Id).Result);
+        list.AddRange(getBillsWater(Id).Result);
+        
+        return list;
 
+    }
     public Task<Bill> getBillById(string content)
     {
         throw new NotImplementedException();

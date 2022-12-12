@@ -10,7 +10,7 @@ public interface IClientLogic
     Task<Client?> getClientById(int id);
     Task<Client> registerClient(Client client);
     Task<Client> deleteClientAccount(Client client);
-    Task<List<Bill>> getBills(string content);
+    Task<List<Bill>> getBills(int Id);
     Task<Bill> getBillById(string content);
     Task<bool> verifyUser(string username, string password);
 }

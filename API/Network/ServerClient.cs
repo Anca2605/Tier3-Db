@@ -91,7 +91,12 @@ public class ServerClient
 
         public async void getBillsForClient(NetworkStream stream, string content)
         {
-            
+            Models.Client.Client c = JsonSerializer.Deserialize<Models.Client.Client>(content);
+            int clientId = c.Id;
+            BillList = await _clientLogic.getBills(clientId);
+            string reply = JsonSerializer.Serialize(BillList);
+            byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
+            stream.Write(bytesWrite,0,bytesWrite.Length);
         }
         
         public async void VerifyUser(NetworkStream stream, string content)
