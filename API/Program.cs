@@ -22,7 +22,7 @@ public class Program
         p._client = new ServerClient();
         p._manager = new ServerManager();
         
-        p.ExecuteServer();
+        //p.ExecuteServer();
     }
 
     public void ExecuteServer()

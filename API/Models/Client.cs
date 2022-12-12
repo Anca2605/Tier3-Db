@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using Tier3_Db.Models.Bill;
 
@@ -26,6 +27,7 @@ public class Client
     public string phonenumber { get; set; }
     [JsonPropertyName("bills")]
     public List<Bill> bills { get; set; }
+    [NotMapped]
     [JsonPropertyName("subscription")]
     public bool[] subscription { get; set; }
     
