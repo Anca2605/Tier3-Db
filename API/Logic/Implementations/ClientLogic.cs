@@ -9,8 +9,14 @@ namespace Tier3___Server.Implementations;
 public class ClientLogic : IClientLogic
 {
     private readonly DataContext context;
-    
-    
+
+    public ClientLogic()
+    {
+        context = new DataContext();
+        
+    }
+
+
     public async Task<Client?> getClientByUsername(string content)
     {
 
@@ -56,61 +62,139 @@ public class ClientLogic : IClientLogic
     
     public async Task<List<Bill>> getBillsElectricity(int Id)
     {
+        Console.WriteLine("method in client logic called");
         List<Bill> list = new List<Bill>();
-        Client client = await context.Clients.FindAsync(Id);
-        IQueryable<Bill> query = context.Electricity.AsQueryable();
-        query = query.Where(b=> b.clientid.Equals(client.Id));
-        list = await query.ToListAsync();
-        return list;
+        Client? client = await context.Clients.FindAsync(Id);
+        if (client != null)
+        {
+            IQueryable<Bill> query = context.Bills.AsQueryable();
+            query = query.Where(b=> b.clientid.Equals(client.Id) && b.provider.Equals("electricity"));
+            list = await query.ToListAsync();
+            return list;
+        }
+        else
+        {
+            Console.WriteLine("Client is not found");
+            return null;
+        }
     }
     
     public async Task<List<Bill>> getBillsWater(int Id)
     {
+        Console.WriteLine("method in client logic called");
         List<Bill> list = new List<Bill>();
-        Client client = await context.Clients.FindAsync(Id);
-        IQueryable<Bill> query = context.Water.AsQueryable();
-        query = query.Where(b=> b.clientid.Equals(client.Id));
-        list = await query.ToListAsync();
-        return list;
+        Client? client = await context.Clients.FindAsync(Id);
+        if (client != null)
+        {
+            IQueryable<Bill> query = context.Bills.AsQueryable();
+            query = query.Where(b=> b.clientid.Equals(client.Id)&& b.provider.Equals("water"));
+            list = await query.ToListAsync();
+            return list;
+        }
+        else
+        {
+            Console.WriteLine("Client is not found");
+            return null;
+        }
     }
     
     public async Task<List<Bill>> getBillsHeating(int Id)
     {
+        Console.WriteLine("method in client logic called");
         List<Bill> list = new List<Bill>();
-        Client client = await context.Clients.FindAsync(Id);
-        IQueryable<Bill> query = context.Heating.AsQueryable();
-        query = query.Where(b=> b.clientid.Equals(client.Id));
-        list = await query.ToListAsync();
-        return list;
+        Client? client = await context.Clients.FindAsync(Id);
+        if (client != null)
+        {
+            IQueryable<Bill> query = context.Bills.AsQueryable();
+            query = query.Where(b=> b.clientid.Equals(client.Id)&& b.provider.Equals("heating"));
+            list = await query.ToListAsync();
+            return list;
+        }
+        else
+        {
+            Console.WriteLine("Client is not found");
+            return null;
+        }
     }
     
     public async Task<List<Bill>> getBillsRent(int Id)
     {
+        Console.WriteLine("method in client logic called");
         List<Bill> list = new List<Bill>();
-        Client client = await context.Clients.FindAsync(Id);
-        IQueryable<Bill> query = context.Rent.AsQueryable();
-        query = query.Where(b=> b.clientid.Equals(client.Id));
-        list = await query.ToListAsync();
-        return list;
+        Client? client = await context.Clients.FindAsync(Id);
+        if (client != null)
+        {
+            IQueryable<Bill> query = context.Bills.AsQueryable();
+            query = query.Where(b=> b.clientid.Equals(client.Id) && b.provider.Equals("rent"));
+            list = await query.ToListAsync();
+            Console.WriteLine("List: " + list.ToString());
+            return list;
+        }
+        else
+        {
+            Console.WriteLine("Client is not found");
+            return null;
+        }
+        
     }
     
     public async Task<List<Bill>> getBills(int Id)
     {
-        List<Bill> list = new List<Bill>();
+        /*List<Bill> list = new List<Bill>();
         list.AddRange(getBillsRent(Id).Result);
         list.AddRange(getBillsElectricity(Id).Result);
         list.AddRange(getBillsHeating(Id).Result);
         list.AddRange(getBillsWater(Id).Result);
         
-        return list;
+        return list;*/
+        
+        
+        Console.WriteLine("method in client logic called");
+        List<Bill> list = new List<Bill>();
+        Client? client = await context.Clients.FindAsync(Id);
+        if (client != null)
+        {
+            IQueryable<Bill> query = context.Bills.AsQueryable();
+            query = query.Where(b=> b.clientid.Equals(client.Id));
+            list = await query.ToListAsync();
+            Console.WriteLine("List: " + list.ToString());
+            return list;
+        }
+        else
+        {
+            Console.WriteLine("Client is not found");
+            return new List<Bill>();
+        }
 
     }
+
+    public async Task<Bill> createBill(Bill bill)
+    {
+        await context.Bills.AddAsync(bill);
+        context.SaveChanges();
+        return bill;
+    }
+    public async Task<Bill> deleteBill(Bill bill)
+    {
+        context.Bills.Remove(bill);
+        context.SaveChanges();
+        return bill;
+    }
+    
+    public async Task<Bill> deleteBillById(int id)
+    {
+        Bill b = await context.Bills.FindAsync(id);
+        context.Remove(b);
+        context.SaveChanges();
+        return b;
+    }
+
     public Task<Bill> getBillById(string content)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<bool> verifyUser(string username, string password)
+    public async Task<Client> verifyUser(string username, string password)
     {
         bool verified = false;
         Client c = await context.Clients.FindAsync(username);
@@ -119,7 +203,7 @@ public class ClientLogic : IClientLogic
             verified = true;
         }
 
-        return verified;
+        return c;
     }
 
     public async Task<bool> subToWater(Client client)

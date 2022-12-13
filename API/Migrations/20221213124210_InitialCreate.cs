@@ -37,6 +37,10 @@ namespace Tier3.Migrations
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     dob = table.Column<string>(type: "TEXT", nullable: false),
                     phonenumber = table.Column<string>(type: "TEXT", nullable: false),
+                    IsSubToElectricity = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsSubToWater = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsSubToHeating = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsSubToRent = table.Column<bool>(type: "INTEGER", nullable: false),
                     ManagerId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>

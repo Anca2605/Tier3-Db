@@ -23,7 +23,6 @@ public class ServerClient
         {
             Models.Client.Client test = JsonSerializer.Deserialize<Models.Client.Client>(content);
             string username = test.Username;
-            string password = test.Password;
             client = await _clientLogic.getClientByUsername(username);
             string reply = JsonSerializer.Serialize(client);
             byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
@@ -50,20 +49,14 @@ public class ServerClient
         
        
         
-        public async Task<Models.Client.Client> Register(NetworkStream stream, string content)
+        public async Task<string> Register(NetworkStream stream, string content)
         {
-            Models.Client.Client test = JsonSerializer.Deserialize<Models.Client.Client>(content);
-            client = await _clientLogic.registerClient(test);
+            Models.Client.Client c = JsonSerializer.Deserialize<Models.Client.Client>(content);
+            client = await _clientLogic.registerClient(c);
             string reply = JsonSerializer.Serialize(client);
             byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
             stream.Write(bytesWrite, 0, bytesWrite.Length);
-            return client;
-        }
-
-        public async void DeleteAccount(string content)
-        {
-            Models.Client.Client test = JsonSerializer.Deserialize<Models.Client.Client>(content);
-            await DeleteAccount(test);
+            return "OK";
         }
 
         private async Task DeleteAccount(Models.Client.Client c)
@@ -78,24 +71,37 @@ public class ServerClient
             byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
             stream.Write(bytesWrite, 0, bytesWrite.Length);
         }
-        
-        
-        
-        public async void ViewBills(NetworkStream stream, string content)
+
+
+
+        public async void CreateBill(NetworkStream stream, string content)
         {
-            List<Bill> Viewbills = await client.viewbills(Int32.Parse(content));
-            string reply = JsonSerializer.Serialize(Viewbills);
-            byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
-            stream.Write(bytesWrite, 0, bytesWrite.Length);
+            Bill bill = JsonSerializer.Deserialize<Bill>(content);
+            await _clientLogic.createBill(bill);
+        }
+
+        public async void DeleteBill(NetworkStream stream, string content)
+        {
+            Bill bill = JsonSerializer.Deserialize<Bill>(content);
+            await _clientLogic.deleteBill(bill);
+        }
+        
+        public async void DeleteBillById(NetworkStream stream, string content)
+        {
+            int id = JsonSerializer.Deserialize<int>(content);
+            await _clientLogic.deleteBillById(id);
         }
 
         public async void getBillsForClient(NetworkStream stream, string content)
         {
-            Models.Client.Client c = JsonSerializer.Deserialize<Models.Client.Client>(content);
-            int clientId = c.Id;
+            Console.WriteLine("method in server client called");
+            int c = JsonSerializer.Deserialize<int>(content);
+            int clientId = c;
+            Console.WriteLine("Got: " + c);
             BillList = await _clientLogic.getBills(clientId);
             string reply = JsonSerializer.Serialize(BillList);
             byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
+            Console.WriteLine("Back: " + reply.ToString());
             stream.Write(bytesWrite,0,bytesWrite.Length);
         }
         
@@ -104,8 +110,8 @@ public class ServerClient
             Models.Client.Client c = JsonSerializer.Deserialize<Models.Client.Client>(content);
             string username = c.Username;
             string password = c.Password;
-            bool verified = await _clientLogic.verifyUser(username, password);
-            string reply = JsonSerializer.Serialize(verified);
+            Models.Client.Client client1 = await _clientLogic.verifyUser(username, password);
+            string reply = JsonSerializer.Serialize(client1);
             byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
             stream.Write(bytesWrite,0,bytesWrite.Length);
 

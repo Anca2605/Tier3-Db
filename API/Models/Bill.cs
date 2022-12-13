@@ -5,6 +5,14 @@ namespace Tier3_Db.Models.Bill;
 
 public class Bill
 {
+    public Bill(int billid, int clientid, double total)
+    {
+        this.billid = billid;
+        this.clientid = clientid;
+        this.total = total;
+        this.provider = "rent";
+    }
+
     [Key]
     [JsonPropertyName("billid")]
     public int billid { get; set; }
