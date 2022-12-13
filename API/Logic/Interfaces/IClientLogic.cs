@@ -11,8 +11,11 @@ public interface IClientLogic
     Task<Client> registerClient(Client client);
     Task<Client> deleteClientAccount(Client client);
     Task<List<Bill>> getBills(int Id);
+    Task<Bill> createBill(Bill bill);
+    Task<Bill> deleteBill(Bill bill);
+    Task<Bill> deleteBillById(int id);
     Task<Bill> getBillById(string content);
-    Task<bool> verifyUser(string username, string password);
+    Task<Client> verifyUser(string username, string password);
 
     Task<bool> subToWater(Client client);
     Task<bool> subToHeating(Client client);

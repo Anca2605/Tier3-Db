@@ -72,7 +72,7 @@ public class ServerManager
         stream.Write(bytesWrite, 0, bytesWrite.Length);
     }
 
-    public async void DeleteManager(string content)
+    public async void DeleteManager(NetworkStream stream, string content)
     {
         await _managerLogic.deleteManager(Int32.Parse(content));
     }
@@ -82,6 +82,15 @@ public class ServerManager
         Models.Manager.Manager manager1 = JsonSerializer.Deserialize<Models.Manager.Manager>(content);
         string username = manager1.Username;
         manager = await _managerLogic.getManagerByUsername(username);
+        string reply = JsonSerializer.Serialize(manager);
+        byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
+        stream.Write(bytesWrite, 0, bytesWrite.Length);
+    }
+
+    public async void Login(NetworkStream stream, string content)
+    {
+        Models.Manager.Manager m = JsonSerializer.Deserialize<Models.Manager.Manager>(content);
+        manager = await _managerLogic.getManagerById(m.Id);
         string reply = JsonSerializer.Serialize(manager);
         byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
         stream.Write(bytesWrite, 0, bytesWrite.Length);
