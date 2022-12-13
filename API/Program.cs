@@ -22,7 +22,7 @@ public class Program
         p._client = new ServerClient();
         p._manager = new ServerManager();
         
-        //p.ExecuteServer();
+        p.ExecuteServer();
     }
 
     public void ExecuteServer()
@@ -87,6 +87,18 @@ public class Program
                         break;
                     case "BILLS":
                         _client.getBillsForClient(stream,req1.Content);
+                        break;
+                    case "SUBTORENT":
+                        _client.SubToRent(stream,req1.Content);
+                        break;
+                    case "SUBTOWATER":
+                        _client.SubToWater(stream,req1.Content);
+                        break;
+                    case "SUBTOHEATING":
+                        _client.SubToHeating(stream,req1.Content);
+                        break;
+                    case "SUBTOELECTRICITY":
+                        _client.SubToElectricity(stream,req1.Content);
                         break;
                     default:
                         string reply = JsonSerializer.Serialize("Domain");

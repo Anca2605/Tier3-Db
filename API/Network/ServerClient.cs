@@ -110,5 +110,38 @@ public class ServerClient
             stream.Write(bytesWrite,0,bytesWrite.Length);
 
         }
+
+        public async void SubToRent(NetworkStream stream, string content)
+        {
+            Models.Client.Client c = JsonSerializer.Deserialize<Models.Client.Client>(content);
+            bool success = await _clientLogic.subToRent(c);
+            string reply = JsonSerializer.Serialize(success);
+            byte[] bytesWrite = Encoding.ASCII.GetBytes((reply));
+            stream.Write(bytesWrite,0,bytesWrite.Length);
+        }
+        public async void SubToWater(NetworkStream stream, string content)
+        {
+            Models.Client.Client c = JsonSerializer.Deserialize<Models.Client.Client>(content);
+            bool success = await _clientLogic.subToWater(c);
+            string reply = JsonSerializer.Serialize(success);
+            byte[] bytesWrite = Encoding.ASCII.GetBytes((reply));
+            stream.Write(bytesWrite,0,bytesWrite.Length);
+        }
+        public async void SubToHeating(NetworkStream stream, string content)
+        {
+            Models.Client.Client c = JsonSerializer.Deserialize<Models.Client.Client>(content);
+            bool success = await _clientLogic.subToHeating(c);
+            string reply = JsonSerializer.Serialize(success);
+            byte[] bytesWrite = Encoding.ASCII.GetBytes((reply));
+            stream.Write(bytesWrite,0,bytesWrite.Length);
+        }
+        public async void SubToElectricity(NetworkStream stream, string content)
+        {
+            Models.Client.Client c = JsonSerializer.Deserialize<Models.Client.Client>(content);
+            bool success = await _clientLogic.subToElectricity(c);
+            string reply = JsonSerializer.Serialize(success);
+            byte[] bytesWrite = Encoding.ASCII.GetBytes((reply));
+            stream.Write(bytesWrite,0,bytesWrite.Length);
+        }
         
 }

@@ -31,6 +31,11 @@ public class Client
     [JsonPropertyName("subscription")]
     public bool[] subscription { get; set; }
     
+    public bool IsSubToElectricity { get; set; }
+    public bool IsSubToWater { get; set; }
+    public bool IsSubToHeating { get; set; }
+    public bool IsSubToRent { get; set; }
+    
     public async Task<List<Bill>> viewbills(int parse)
     {
         throw new NotImplementedException();
@@ -45,6 +50,11 @@ public class Client
         Email = email;
         this.dob = dob;
         this.phonenumber = phonenumber;
+        subscription = new [] {false,false,false,false };
+        IsSubToElectricity = subscription[0];
+        IsSubToHeating = subscription[1];
+        IsSubToRent = subscription[2];
+        IsSubToWater = subscription[3];
 
     }
 
