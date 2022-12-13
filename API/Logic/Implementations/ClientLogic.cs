@@ -21,6 +21,7 @@ public class ClientLogic : IClientLogic
     public async Task<Client> createClientAccount(Client c)
     {
         await context.Clients.AddAsync(c);
+        context.SaveChanges();
         return c;
     }
 
@@ -33,6 +34,7 @@ public class ClientLogic : IClientLogic
     public async Task<Client> registerClient(Client client)
     {
         await context.AddAsync(client);
+        context.SaveChanges();
         return client;
     }
 
@@ -46,6 +48,7 @@ public class ClientLogic : IClientLogic
             //nothing
         }
         context.Remove(client);
+        context.SaveChanges();
         return client;
 
 
@@ -117,5 +120,49 @@ public class ClientLogic : IClientLogic
         }
 
         return verified;
+    }
+
+    public async Task<bool> subToWater(Client client)
+    {
+        Client c = await context.Clients.FindAsync(client.Id);
+        c.IsSubToWater = true;
+        context.Clients.Remove(client);
+        context.SaveChanges();
+        await context.Clients.AddAsync(c);
+        context.SaveChanges();
+        return true;
+    }
+
+    public async Task<bool> subToHeating(Client client)
+    {
+        Client c = await context.Clients.FindAsync(client.Id);
+        c.IsSubToHeating = true;
+        context.Clients.Remove(client);
+        context.SaveChanges();
+        await context.Clients.AddAsync(c);
+        context.SaveChanges();
+        return true;
+    }
+
+    public async Task<bool> subToElectricity(Client client)
+    {
+        Client c = await context.Clients.FindAsync(client.Id);
+        c.IsSubToElectricity = true;
+        context.Clients.Remove(client);
+        context.SaveChanges();
+        await context.Clients.AddAsync(c);
+        context.SaveChanges();
+        return true;
+    }
+
+    public async Task<bool> subToRent(Client client)
+    {
+        Client c = await context.Clients.FindAsync(client.Id);
+        c.IsSubToRent = true;
+        context.Clients.Remove(client);
+        context.SaveChanges();
+        await context.Clients.AddAsync(c);
+        context.SaveChanges();
+        return true;
     }
 }

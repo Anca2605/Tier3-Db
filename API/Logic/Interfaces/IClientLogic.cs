@@ -13,4 +13,9 @@ public interface IClientLogic
     Task<List<Bill>> getBills(int Id);
     Task<Bill> getBillById(string content);
     Task<bool> verifyUser(string username, string password);
+
+    Task<bool> subToWater(Client client);
+    Task<bool> subToHeating(Client client);
+    Task<bool> subToElectricity(Client client);
+    Task<bool> subToRent(Client client);
 }
