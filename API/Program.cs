@@ -62,7 +62,8 @@ public class Program
                     case "LOGIN":
                         _client.VerifyUser(stream, req1.Content); break;
                     case "DELETECLIENT":
-                        _manager.DeleteClient(stream, req1.Content); break;
+                        //ex manager
+                        _client.DeleteClient(stream, req1.Content); break;
                     case "GETCLIENTBYUSERNAME":
                         _client.GetClientByUsername(stream, req1.Content); break;
                     case "GETCLIENTBYID":
@@ -74,18 +75,23 @@ public class Program
                     case "DELETEBILLBYID":
                         _client.DeleteBillById(stream, req1.Content); break;
                     case "ADDCLIENT":
+                        //ex manager
                         _manager.AddClient(stream, req1.Content); break;
                     case "VERIFY":
                         _client.VerifyUser(stream, req1.Content); break;
                     case "BILLS":
                         _client.getBillsForClient(stream,req1.Content); break;
                     case "LOGINMANAGER":
+                        //ex manager
                         _manager.Login(stream, req1.Content); break;
                     case "DELETEMANAGER":
+                        //ex manager
                         _manager.DeleteManager(stream,req1.Content); break;
                     case "GETMANAGERBYUSERNAME":
+                        //ex manager
                         _manager.GetManagerByUsername(stream,req1.Content); break;
                     case "GETMANAGERBYID":
+                        //ex manager
                         _manager.GetManagerById(stream,req1.Content); break;
                     case "SUBTORENT":
                         _client.SubToRent(stream,req1.Content); break;

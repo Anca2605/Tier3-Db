@@ -13,21 +13,32 @@ class Program
         TcpClient clientSocket = new TcpClient();
         clientSocket.Connect("127.0.0.1", 8091);
         NetworkStream serverStream = clientSocket.GetStream();
-        Client testClient = new Client(18, "test", "alpha", "beta", "kurva@gmail.com",
+        Client testClient01 = new Client(18, "test01", "alpha01", "beta", "kurva@gmail.com",
             "05/25/25 12:25:00", "00000000");
-        Bill testBill = new Bill(22,3,344, "rent");
+        Client testClient2 = new Client(20, "test122", "alpha122", "beta", "kurva@gmail.com",
+            "05/25/25 12:25:00", "00000000");
+        Client testClient3 = new Client(21, "test21", "alpha21", "beta", "kurva@gmail.com",
+            "05/25/25 12:25:00", "00000000");
+        Client testClient4 = new Client(23, "test22", "alpha22", "beta", "kurva@gmail.com",
+            "05/25/25 12:25:00", "00000000");
+        Bill testBill = new Bill(25,3,344, "rent");
+
+        string UserName = "test21";
 
         Console.WriteLine("Get client by username: a -->");
         try
         {
             
             //fail
-            //createClientAccount(testClient); 
-            //getClientByUsername("Lolek");
-            //deleteClientAccount(10);
-            //registerClient(testClient);
+            
+            
+            
             
             //pass
+            //deleteClientAccount(23);
+            //getClientByUsername(UserName);
+            //createClientAccount(testClient4);
+            //registerClient(testClient4);
             //deleteBillById(21);  
             //createBill(testBill); 
             //getBills(3); pass
@@ -228,6 +239,44 @@ class Program
             int bytesToRead = serverStream.Read(data, 0, data.Length);
             string req = Encoding.ASCII.GetString(data, 0, bytesToRead);
             Console.WriteLine("Sub to heating: " + req);
+        }
+        
+       void getManagerById(int id)
+        {
+            NetworkPackage p = new NetworkPackage(NetworkType.GETMANAGERBYID, JsonSerializer.Serialize<int>(id));
+            byte[] outStream = System.Text.Encoding.ASCII.GetBytes(JsonSerializer.Serialize(p));
+            serverStream.Write(outStream, 0, outStream.Length);
+            
+            byte[] data = new byte[1024 * 1024];
+            int bytesToRead = serverStream.Read(data, 0, data.Length);
+            string req = Encoding.ASCII.GetString(data, 0, bytesToRead);
+            Console.WriteLine("Get manager by id: " + req);
+        }
+
+       void getManagerByUsername(string content)
+        {
+            NetworkPackage p = new NetworkPackage(NetworkType.GETMANAGERBYUSERNAME, JsonSerializer.Serialize<string>(content));
+            byte[] outStream = System.Text.Encoding.ASCII.GetBytes(JsonSerializer.Serialize(p));
+            serverStream.Write(outStream, 0, outStream.Length);
+            
+            byte[] data = new byte[1024 * 1024];
+            int bytesToRead = serverStream.Read(data, 0, data.Length);
+            string req = Encoding.ASCII.GetString(data, 0, bytesToRead);
+            Console.WriteLine("Get manager by username: " + req);
+        }
+
+       
+
+       void deleteManager(int id)
+        {
+            NetworkPackage p = new NetworkPackage(NetworkType.DELETEMANAGER, JsonSerializer.Serialize<int>(id));
+            byte[] outStream = System.Text.Encoding.ASCII.GetBytes(JsonSerializer.Serialize(p));
+            serverStream.Write(outStream, 0, outStream.Length);
+            
+            byte[] data = new byte[1024 * 1024];
+            int bytesToRead = serverStream.Read(data, 0, data.Length);
+            string req = Encoding.ASCII.GetString(data, 0, bytesToRead);
+            Console.WriteLine("Delete manager: " + req);
         }
     }
 

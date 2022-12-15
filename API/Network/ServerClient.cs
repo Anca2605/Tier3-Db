@@ -23,7 +23,8 @@ public class ServerClient
 
         public async void GetClientByUsername(NetworkStream stream, string content)
         {
-            Console.WriteLine("ServerClient get client by username");
+            Console.WriteLine("ServerClient get client by username: " + content);
+            string username = JsonSerializer.Deserialize<string>(content);
             client = await _clientLogic.getClientByUsername(content);
             string reply = JsonSerializer.Serialize(client);
             byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);

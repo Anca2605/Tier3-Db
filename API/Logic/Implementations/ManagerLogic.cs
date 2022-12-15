@@ -29,12 +29,9 @@ public class ManagerLogic : IManagerLogic
 
     public async Task<Client> deleteClient(int id)
     {
-
-        Console.WriteLine("Id to be deleted: " + id);
-        Client existing = await context.Clients.FindAsync(id);
-        context.Remove(existing);
-        await context.SaveChangesAsync();
-        return existing;
+        Client c = await context.Clients.FindAsync(id);
+        
+        return c;
     }
 
     public async Task<Client> editClient(Client client)

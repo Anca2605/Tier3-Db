@@ -48,8 +48,9 @@ public class ServerManager
     
     public async void DeleteClient(NetworkStream stream, string content)
     {
-        
-        client = await _managerLogic.deleteClient(int.Parse(content));
+
+        int id = JsonSerializer.Deserialize<int>(content);
+        client = await _managerLogic.deleteClient(id);
         string reply = JsonSerializer.Serialize(client);
         byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
         stream.Write(bytesWrite, 0, bytesWrite.Length);

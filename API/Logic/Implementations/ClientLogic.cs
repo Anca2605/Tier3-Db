@@ -20,10 +20,12 @@ public class ClientLogic : IClientLogic
 
     public async Task<Client?> getClientByUsername(string content)
     {
-        Console.WriteLine("Client logic get client by username");
+        string username = content.Substring(1, content.Length - 2);
         IQueryable<Client> clientQuery = context.Clients.AsQueryable();
-        Client client = clientQuery.Where(c => c.Username.Equals(content)).ToList().FirstOrDefault();
-        return client;
+        clientQuery = clientQuery.Where(c => c.Username.Equals(username));
+        IEnumerable<Client> client = await clientQuery.ToListAsync();
+        Client c = client.FirstOrDefault();
+        return c;
     }
 
     public async Task<Client> createClientAccount(Client c)
