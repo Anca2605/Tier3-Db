@@ -147,9 +147,7 @@ namespace Tier3.Migrations
 
                     b.HasIndex("billid1");
 
-                    b.HasIndex("clientid");
-
-                    b.ToTable("Bill");
+                    b.ToTable("Bills");
 
                     b.HasAnnotation("Relational:JsonPropertyName", "bills");
                 });
@@ -166,17 +164,6 @@ namespace Tier3.Migrations
                     b.HasOne("Tier3_Db.Models.Bill.Bill", null)
                         .WithMany("viewbills")
                         .HasForeignKey("billid1");
-
-                    b.HasOne("Db3.Models.Client.Client", null)
-                        .WithMany("bills")
-                        .HasForeignKey("clientid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Db3.Models.Client.Client", b =>
-                {
-                    b.Navigation("bills");
                 });
 
             modelBuilder.Entity("Db3.Models.Manager.Manager", b =>

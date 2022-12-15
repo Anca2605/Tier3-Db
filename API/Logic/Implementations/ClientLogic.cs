@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using Db3.Models.Client;
+using Db3.Models.Manager;
 using Microsoft.EntityFrameworkCore;
 using Tier3___Server.Logic;
 using Tier3_Db.Models.Bill;
@@ -19,8 +20,9 @@ public class ClientLogic : IClientLogic
 
     public async Task<Client?> getClientByUsername(string content)
     {
-
-        Client client = await context.Clients.FindAsync(content);
+        Console.WriteLine("Client logic get client by username");
+        IQueryable<Client> clientQuery = context.Clients.AsQueryable();
+        Client client = clientQuery.Where(c => c.Username.Equals(content)).ToList().FirstOrDefault();
         return client;
     }
 
@@ -39,8 +41,8 @@ public class ClientLogic : IClientLogic
 
     public async Task<Client> registerClient(Client client)
     {
-        await context.AddAsync(client);
-        context.SaveChanges();
+        await context.Clients.AddAsync(client);
+        await context.SaveChangesAsync();
         return client;
     }
 
@@ -197,7 +199,10 @@ public class ClientLogic : IClientLogic
     public async Task<Client> verifyUser(string username, string password)
     {
         bool verified = false;
-        Client c = await context.Clients.FindAsync(username);
+        IQueryable<Client> clientq = context.Clients.AsQueryable();
+        int clientId = clientq.Where(c => c.Username.Equals(username)).ToList().FirstOrDefault().Id;
+
+        Client c = await context.Clients.FindAsync(clientId);
         if (c.Username == username && c.Password == password)
         {
             verified = true;
@@ -206,47 +211,88 @@ public class ClientLogic : IClientLogic
         return c;
     }
 
-    public async Task<bool> subToWater(Client client)
+    public async Task<bool> subToWater(int id)
     {
-        Client c = await context.Clients.FindAsync(client.Id);
+        Client c = await context.Clients.FindAsync(id);
         c.IsSubToWater = true;
-        context.Clients.Remove(client);
+        context.Clients.Remove(c);
         context.SaveChanges();
         await context.Clients.AddAsync(c);
         context.SaveChanges();
         return true;
     }
 
-    public async Task<bool> subToHeating(Client client)
+    public async Task<bool> subToHeating(int id)
     {
-        Client c = await context.Clients.FindAsync(client.Id);
+        Client c = await context.Clients.FindAsync(id);
         c.IsSubToHeating = true;
-        context.Clients.Remove(client);
+        context.Clients.Remove(c);
         context.SaveChanges();
         await context.Clients.AddAsync(c);
         context.SaveChanges();
         return true;
     }
 
-    public async Task<bool> subToElectricity(Client client)
+    public async Task<bool> subToElectricity(int id)
     {
-        Client c = await context.Clients.FindAsync(client.Id);
+        Client c = await context.Clients.FindAsync(id);
         c.IsSubToElectricity = true;
-        context.Clients.Remove(client);
+        context.Clients.Remove(c);
         context.SaveChanges();
         await context.Clients.AddAsync(c);
         context.SaveChanges();
         return true;
     }
 
-    public async Task<bool> subToRent(Client client)
+    public async Task<bool> subToRent(int id)
     {
-        Client c = await context.Clients.FindAsync(client.Id);
+        Client c = await context.Clients.FindAsync(id);
         c.IsSubToRent = true;
-        context.Clients.Remove(client);
+        context.Clients.Remove(c);
         context.SaveChanges();
         await context.Clients.AddAsync(c);
         context.SaveChanges();
         return true;
+    }
+    
+    public async Task<Manager> getManagerById(int id)
+    {
+        Manager manager = await context.Managers.FindAsync(id);
+        return manager;
+    }
+
+    public async Task<Manager>? getManagerByUsername(string content)
+    {
+        Manager manager = await context.Managers.FindAsync(content);
+        return manager;
+    }
+
+    public async Task<Client> addClient(Client client)
+    {
+        await context.Clients.AddAsync(client);
+        return client;
+    }
+
+    public async Task<Client> deleteClient(int id)
+    {
+
+        Console.WriteLine("Id to be deleted: " + id);
+        Client existing = await context.Clients.FindAsync(id);
+        context.Remove(existing);
+        await context.SaveChangesAsync();
+        return existing;
+    }
+
+    public async Task<Client> editClient(Client client)
+    {
+        Client c = await context.Clients.FindAsync(client.Id);
+        context.Clients.Remove(c);
+        context.Clients.AddAsync(client);
+        return client;
+    }
+
+    public Task<Manager> deleteManager(int id)
+    {
+        throw new NotImplementedException();
     }
 }

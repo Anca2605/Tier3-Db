@@ -45,7 +45,6 @@ public class Program
     private void Handle(TcpClient tcpClient)
     {
         NetworkStream stream = tcpClient.GetStream();
-
         while (true)
         {
             try
@@ -54,66 +53,50 @@ public class Program
                 int bytesToRead = stream.Read(data, 0, data.Length);
                 string req = Encoding.ASCII.GetString(data, 0, bytesToRead);
                 NetworkPackage req1 = JsonSerializer.Deserialize<NetworkPackage>(req);
-                Console.WriteLine("Program class network package content"+ req1.Content);
+                Console.WriteLine("Program class network package content: "+ req1.Content);
 
                 switch (req1.Type.ToString())
                 {
                     case "REGISTER":
-                        _client.Register(stream, req1.Content);
-                        break;
+                        _client.Register(stream, req1.Content); break;
                     case "LOGIN":
-                        _client.VerifyUser(stream, req1.Content);
-                        break;
+                        _client.VerifyUser(stream, req1.Content); break;
                     case "DELETECLIENT":
-                        _manager.DeleteClient(stream, req1.Content);
-                        break;
+                        _manager.DeleteClient(stream, req1.Content); break;
                     case "GETCLIENTBYUSERNAME":
-                        _client.GetClientByUsername(stream, req1.Content);
-                        break;
+                        _client.GetClientByUsername(stream, req1.Content); break;
                     case "GETCLIENTBYID":
-                        _client.GetClientById(stream, req1.Content);
-                        break;
+                        _client.GetClientById(stream, req1.Content); break;
                     case "ADDBILL":
-                        _client.CreateBill(stream, req1.Content);
-                        break;
+                        _client.CreateBill(stream, req1.Content); break;
                     case "DELETEBILL":
-                        _client.DeleteBill(stream, req1.Content);
-                        break;
+                        _client.DeleteBill(stream, req1.Content); break;
                     case "DELETEBILLBYID":
-                        _client.DeleteBillById(stream, req1.Content);
-                        break;
+                        _client.DeleteBillById(stream, req1.Content); break;
                     case "ADDCLIENT":
-                        _manager.AddClient(stream, req1.Content);
-                        break;
+                        _manager.AddClient(stream, req1.Content); break;
                     case "VERIFY":
-                        _client.VerifyUser(stream, req1.Content);
-                        break;
+                        _client.VerifyUser(stream, req1.Content); break;
                     case "BILLS":
-                        _client.getBillsForClient(stream,req1.Content);
-                        break;
+                        _client.getBillsForClient(stream,req1.Content); break;
                     case "LOGINMANAGER":
-                        _manager.Login(stream, req1.Content);
-                        break;
+                        _manager.Login(stream, req1.Content); break;
                     case "DELETEMANAGER":
-                        _manager.DeleteManager(stream,req1.Content);
-                        break;
+                        _manager.DeleteManager(stream,req1.Content); break;
                     case "GETMANAGERBYUSERNAME":
-                        _manager.GetManagerByUsername(stream,req1.Content);
-                        break;
+                        _manager.GetManagerByUsername(stream,req1.Content); break;
                     case "GETMANAGERBYID":
-                        _manager.GetManagerById(stream,req1.Content);
-                        break;
+                        _manager.GetManagerById(stream,req1.Content); break;
                     case "SUBTORENT":
-                        _client.SubToRent(stream,req1.Content);
-                        break;
+                        _client.SubToRent(stream,req1.Content); break;
                     case "SUBTOWATER":
-                        _client.SubToWater(stream,req1.Content);
-                        break;
+                        _client.SubToWater(stream,req1.Content); break;
                     case "SUBTOHEATING":
-                        _client.SubToHeating(stream,req1.Content);
-                        break;
+                        _client.SubToHeating(stream,req1.Content); break;
                     case "SUBTOELECTRICITY":
-                        _client.SubToElectricity(stream,req1.Content);
+                        _client.SubToElectricity(stream,req1.Content); break;
+                    case "CREATECLIENTACCOUNT":
+                        _client.CreateClientAccount(stream, req1.Content);
                         break;
                     default:
                         string reply = JsonSerializer.Serialize("Domain");

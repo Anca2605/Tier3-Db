@@ -25,8 +25,9 @@ public class Client
     public string dob { get; set; }
     [JsonPropertyName("phonenumber")]
     public string phonenumber { get; set; }
+    /*[NotMapped]
     [JsonPropertyName("bills")]
-    public List<Bill> bills { get; set; }
+    public List<Bill> bills { get; set; }*/
     [NotMapped]
     [JsonPropertyName("subscription")]
     public bool[] subscription { get; set; }
