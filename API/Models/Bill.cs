@@ -5,12 +5,12 @@ namespace Tier3_Db.Models.Bill;
 
 public class Bill
 {
-    public Bill(int billid, int clientid, double total)
+    public Bill(int billid, int clientid, double total, string provider)
     {
         this.billid = billid;
         this.clientid = clientid;
         this.total = total;
-        this.provider = "rent";
+        this.provider = provider;
     }
 
     [Key]
