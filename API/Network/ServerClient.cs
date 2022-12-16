@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System.Collections;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using Db3.Models.Manager;
@@ -112,10 +113,8 @@ public class ServerClient
         
         public async void VerifyUser(NetworkStream stream, string content)
         {
-            Models.Client.Client c = JsonSerializer.Deserialize<Models.Client.Client>(content);
-            string username = c.Username;
-            string password = c.Password;
-            Models.Client.Client client1 = await _clientLogic.verifyUser(username, password);
+            string[] str = JsonSerializer.Deserialize<string>(content).Split('/');
+            Models.Client.Client client1 = await _clientLogic.verifyUser(str[0], str[1]);
             string reply = JsonSerializer.Serialize(client1);
             byte[] bytesWrite = Encoding.ASCII.GetBytes(reply);
             stream.Write(bytesWrite,0,bytesWrite.Length);
